@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GeminiPuerto</string>
+    <string name="hello_description">Hola!\nBievenido!</string>
+    <string name="star_image_btn">Star image button</string>
+    <string name="example_advice">Acepta los desafíos en la vida con valentía. Los momentos difíciles son oportunidades para aprender, crecer y convertirte en una persona más fuerte y resiliente. No temas abrazar lo desconocido, pues es en lo desconocido donde reside el mayor potencial de crecimiento.</string>
+    <string name="click_button_advice">Pincha el botón para tu consejo del día</string>
+</resources>
