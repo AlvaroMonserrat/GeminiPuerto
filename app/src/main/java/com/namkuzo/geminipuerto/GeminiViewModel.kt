@@ -14,16 +14,16 @@ class GeminiViewModel : ViewModel() {
     private val _dailyAdvice = MutableStateFlow<ApiResponseState<String>?>(null)
     val dailyAdvice: StateFlow<ApiResponseState<String>?> = _dailyAdvice
 
-    fun fetchDailyAdvice() {
+    fun fetchDailyAdvice(language: String) {
         _dailyAdvice.value = ApiResponseState.Loading()
         viewModelScope.launch {
-            Log.i("GEMINI", "CALL")
             try {
-                val response = geminiRepository.fetchDailyAdvice()
+                val response = geminiRepository.fetchDailyAdvice(language)
                 _dailyAdvice.value = ApiResponseState.Success(response.text.orEmpty())
                 Log.i("GEMINI", response.text.toString())
             } catch (e: Exception) {
-                _dailyAdvice.value = ApiResponseState.Success("")
+                Log.e("GEMINI", e.message.orEmpty())
+                _dailyAdvice.value = ApiResponseState.Error(e.message.orEmpty())
             }
         }
     }
@@ -31,5 +31,6 @@ class GeminiViewModel : ViewModel() {
 
 sealed class ApiResponseState<T> {
     data class Success<T>(val data: T) : ApiResponseState<T>()
+    data class Error<T>(val error: T) : ApiResponseState<T>()
     class Loading<T> : ApiResponseState<T>()
 }

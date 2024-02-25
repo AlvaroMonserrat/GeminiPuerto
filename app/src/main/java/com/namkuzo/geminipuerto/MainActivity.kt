@@ -28,11 +28,12 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.namkuzo.geminipuerto.ui.component.LoadingErrorBox
+import com.namkuzo.geminipuerto.ui.component.LoadingErrorIndicator
 import com.namkuzo.geminipuerto.ui.theme.GeminiPuertoTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,12 +42,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val currentLanguage = Locale.current.language
         setContent {
             GeminiPuertoTheme {
                 // A surface container using the 'background' color from the theme
                 GeminiPuertoScreen(
                     viewModel = viewModel,
-                    onClick = viewModel::fetchDailyAdvice
+                    onClick = {
+                        viewModel.fetchDailyAdvice(currentLanguage)
+                    }
                 )
             }
         }
@@ -65,7 +69,7 @@ fun GeminiPuertoScreen(
         onClick = onClick
     )
 
-    LoadingErrorBox(
+    LoadingErrorIndicator(
         state = dailyAdvice.value
     )
 }
